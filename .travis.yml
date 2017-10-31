@@ -15,7 +15,7 @@ before_script:
 #- JSONPATH='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}'; until kubectl get nodes -o jsonpath="$JSONPATH" 2>&1 | grep -q "Ready=True"; do sleep 1; done
 
 # Install OepnShift client tools (oc)
-- curl -Lo openshift-origin-client-tools.tar.gz https://github.com/openshift/origin/releases/download/v3.6.1/openshift-origin-client-tools-v3.6.1-008f2d5-linux-64bit.tar.gz && tar xvzf openshift-origin-client-tools.tar.gz -C /usr/local/bin/ --strip-components=1 openshift-origin-client-tools-v3.6.1-008f2d5-linux-64bit/oc
+- sudo curl -Lo openshift-origin-client-tools.tar.gz https://github.com/openshift/origin/releases/download/v3.6.1/openshift-origin-client-tools-v3.6.1-008f2d5-linux-64bit.tar.gz && tar xvzf openshift-origin-client-tools.tar.gz -C /usr/local/bin/ --strip-components=1 openshift-origin-client-tools-v3.6.1-008f2d5-linux-64bit/oc
 - oc cluster up
 
 script:
