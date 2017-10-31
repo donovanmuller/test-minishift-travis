@@ -27,51 +27,49 @@
 # - oc get nodes
 
 language: java
+jdk:
+  - oraclejdk8
 
 sudo: required
 env: OPENSHIFT_VERSIONS="v3.6.1"
-services:
-- docker
-addons:
-  apt:
-    packages:
-    - bsdtar
 
 before_install:
-- |
-    echo 'DOCKER_OPTS="$DOCKER_OPTS --insecure-registry 172.30.0.0/16"' > ${tmp}
-    sudo mv ${tmp} /etc/default/docker
-    sudo mount --make-shared /
-    sudo service docker restart
-    version="v3.6.1" commitId="008f2d5" && curl -L https://github.com/openshift/origin/releases/download/${version}/openshift-origin-client-tools-${version}-${commitId}-linux-64bit.tar.gz | tar -f - -x -z --strip-components=1 -C /usr/local/bin/ openshift-origin-client-tools-${version}-${commitId}-linux-64bit/oc
+  - |
+      echo 'DOCKER_OPTS="$DOCKER_OPTS --insecure-registry 172.30.0.0/16"' > ${tmp}
+      sudo mv ${tmp} /etc/default/docker
+      sudo mount --make-shared /
+      sudo service docker restart
+      version="v3.6.1" commitId="008f2d5" && curl -L https://github.com/openshift/origin/releases/download/${version}/openshift-origin-client-tools-${version}-${commitId}-linux-64bit.tar.gz | tar -f - -x -z --strip-components=1 -C /usr/local/bin/ openshift-origin-client-tools-${version}-${commitId}-linux-64bit/oc
 
-install:
-- true
-
-env:
-  global:
-  
 before_script:
-- true
+  - sudo mount --make-shared /
+  - sudo service docker stop
+  - sudo sed -i 's/DOCKER_OPTS=\"/DOCKER_OPTS=\"--insecure-registry 172.30.0.0\/16 /' /etc/default/docker
+  - sudo service docker start
+  - version="v3.6.1" commitId="008f2d5" wget https://github.com/openshift/origin/releases/download/${version}/openshift-origin-client-tools-${version}-${commitId}-linux-64bit.tar.gz
+  - version="v3.6.1" commitId="008f2d5" tar xvzOf openshift-origin-client-tools-${version}-${commitId}-linux-64bit.tar.gz > oc.bin
+  - sudo mv oc.bin /usr/bin/oc
+  - sudo chmod 755 /usr/bin/oc
 
 script:
-- |
-  set -e
-    [[ ! -z "${OPENSHIFT_VERSIONS}" ]]
-    for version in ${OPENSHIFT_VERSIONS}; do
-      oc cluster up --version=${version}
-      oc new-project scdf
-      oc login -u system:admin
+  - |
+    set -e
+      [[ ! -z "${OPENSHIFT_VERSIONS}" ]]
+      for version in ${OPENSHIFT_VERSIONS}; do
+        oc cluster up --version=${version}
+        oc new-project scdf
+        oc login -u system:admin
 
-      oc cluster down
-    done
-  fi
+        oc cluster down
+      done
+    fi
+
 after_failure:
-- |
-  oc login -u system:admin
-  oc get events
+ - oc login -u system:admin
+ - oc get events
+ 
 after_success:
-- |
-  if [[ "${TRAVIS_BRANCH}" == "master" && "${TRAVIS_PULL_REQUEST}" == "false" ]]; then
-    echo "Should we use this?"
-  fi
+  - |
+    if [[ "${TRAVIS_BRANCH}" == "master" && "${TRAVIS_PULL_REQUEST}" == "false" ]]; then
+      echo "Should we use this?"
+    fi
