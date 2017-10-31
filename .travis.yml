@@ -32,9 +32,7 @@ jdk:
 
 sudo: required
 env: 
- - OPENSHIFT_VERSIONS="v3.6.1"
- - OPENSHIFT_OC_VERSION="v3.6.1"
- - OPENSHIFT_OC_COMMIT_ID="008f2d5"
+ - OPENSHIFT_VERSIONS="v3.6.1" OPENSHIFT_OC_VERSION=v3.6.1 OPENSHIFT_OC_COMMIT_ID=008f2d5
 
 before_script:
   - sudo mount --make-shared /
