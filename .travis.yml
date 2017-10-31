@@ -33,14 +33,6 @@ jdk:
 sudo: required
 env: OPENSHIFT_VERSIONS="v3.6.1"
 
-before_install:
-  - |
-      echo 'DOCKER_OPTS="$DOCKER_OPTS --insecure-registry 172.30.0.0/16"' > ${tmp}
-      sudo mv ${tmp} /etc/default/docker
-      sudo mount --make-shared /
-      sudo service docker restart
-      version="v3.6.1" commitId="008f2d5" && curl -L https://github.com/openshift/origin/releases/download/${version}/openshift-origin-client-tools-${version}-${commitId}-linux-64bit.tar.gz | tar -f - -x -z --strip-components=1 -C /usr/local/bin/ openshift-origin-client-tools-${version}-${commitId}-linux-64bit/oc
-
 before_script:
   - sudo mount --make-shared /
   - sudo service docker stop
