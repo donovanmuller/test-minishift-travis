@@ -1,0 +1,27 @@
+sudo: required
+
+# This moves Kubernetes specific config files.
+env:
+- CHANGE_MINIKUBE_NONE_USER=true
+
+before_script:
+#- curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.7.0/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin/
+# Download and extract minishift
+#- curl -Lo minishift.tar.gz https://github.com/minishift/minishift/releases/download/v1.8.0/minishift-1.8.0-linux-amd64.tgz && tar xvzf minishift.tar.gz -C /tmp --strip-components=1 minishift-1.8.0-linux-amd64/minishift 
+#- sudo minikube start --vm-driver=none --kubernetes-version=v1.7.0
+# Fix the kubectl context, as it's often stale.
+#- minikube update-context
+# Wait for Kubernetes to be up and ready.
+#- JSONPATH='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}'; until kubectl get nodes -o jsonpath="$JSONPATH" 2>&1 | grep -q "Ready=True"; do sleep 1; done
+
+# Install OepnShift client tools (oc)
+- curl -Lo openshift-origin-client-tools.tar.gz https://github.com/openshift/origin/releases/download/v3.6.1/openshift-origin-client-tools-v3.6.1-008f2d5-linux-64bit.tar.gz && tar xvzf openshift-origin-client-tools.tar.gz -C /usr/local/bin/ --strip-components=1 openshift-origin-client-tools-v3.6.1-008f2d5-linux-64bit/oc
+- oc cluster up
+
+script:
+# Create example Redis deployment on Kubernetes.
+#- kubectl cluster-info 
+#- kubectl run travis-example --image=redis
+#- kubectl get deployment
+
+- oc get nodes
