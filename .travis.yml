@@ -43,15 +43,14 @@ before_install:
     sudo mv ${tmp} /etc/default/docker
     sudo mount --make-shared /
     sudo service docker restart
-    version="v3.6.1" commitId="008f2d5" && curl -L https://github.com/openshift/origin/releases/download/${version}/openshift-origin-client-tools-${version}-${commitId}-linux-64bit.tar.gz | tar -f - -x -z --strip-components=1 -C openshift-origin-client-tools-${version}-${commitId}-linux-64bit/oc
+    version="v3.6.1" commitId="008f2d5" && curl -L https://github.com/openshift/origin/releases/download/${version}/openshift-origin-client-tools-${version}-${commitId}-linux-64bit.tar.gz | tar -f - -x -z --strip-components=1 -C /usr/local/bin/ openshift-origin-client-tools-${version}-${commitId}-linux-64bit/oc
 
 install:
 - true
 
 env:
   global:
-  - secure: aJdsmnzKP4Ze/hXYv/qV65Qbv53rzlvSSV0sjy8y3iIfPkW3zTvoVafXA36x8hSaVP12BxZ9Ms2PiAjrougZYmGr8v3fr0F5xg7iIrhuB99sswGB37CmnbP/MnrJDrjarenhrIXcnpRT5PwsErsdhppxEP+dhXgw1lzTP2r4RN4jMKgBZdzKB4e3HfFbNZ12tdnY9Xey+VLj02EodQxmwVCHWVDFy4JwZwU9P+uL+6VSJopPaSWX+Ga8fu31RfymNzTc2P0mUgO9GBWMB0m/buz/MxlIVzM29AV47uBmZg2dDh9sWoIS12p9InTWV75JN9lfj040jsjrZ63ydiStyeBZ9Wf8irRxsXH3dZ4FJtIey7oDwObMRM20E7wln+93CNEWTQkmC9Gjz4JIap9zP1IR6SrnU+445xdmwwpw+G3JtDn+i/bpfvmse3RYOWyMUrnmSkrkOXn8PLMfc5ZB2vHZWF5KQQAaqqe6wCmii0cVGaEtpkdBdO+FqJ7UdS/F0VmGD11sEzutz4RIpYmYhz3gKe30bs9bZ6SjKgv8TsWTRKbMDv+2CMgAd/5xJcJx2/73Wb7FdzrNg4FNr6V3clN3aIEF9YCu/ph+49ahcU6jQURwz8NdAxDHVjGwhyI6UAz3GZAG5FP0ctyTjhlVxVcqMrAGZeBxKKFtGsHlyjc=
-
+  
 before_script:
 - true
 
