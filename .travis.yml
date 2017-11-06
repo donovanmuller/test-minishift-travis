@@ -23,7 +23,8 @@ script:
 
 deploy:
   provider: script
-  script: .travis/release.sh  
+  # see https://github.com/travis-ci/travis-ci/issues/5538
+  script: chmod +x .travis/release.sh && .travis/release.sh
   skip_cleanup: true
   on:
     tags: true
