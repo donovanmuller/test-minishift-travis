@@ -1,5 +1,16 @@
 # Change Log
 
+## [Unreleased](https://github.com/donovanmuller/test-minishift-travis/tree/HEAD)
+
+[Full Changelog](https://github.com/donovanmuller/test-minishift-travis/compare/v0.0.26...HEAD)
+
+**Closed issues:**
+
+- Add Bintray URL to release notes [\#8](https://github.com/donovanmuller/test-minishift-travis/issues/8)
+
+## [v0.0.26](https://github.com/donovanmuller/test-minishift-travis/tree/v0.0.26) (2017-11-06)
+[Full Changelog](https://github.com/donovanmuller/test-minishift-travis/compare/v0.0.25...v0.0.26)
+
 ## [v0.0.25](https://github.com/donovanmuller/test-minishift-travis/tree/v0.0.25) (2017-11-06)
 [Full Changelog](https://github.com/donovanmuller/test-minishift-travis/compare/v0.0.24...v0.0.25)
 
