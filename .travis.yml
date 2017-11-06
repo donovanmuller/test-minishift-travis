@@ -15,13 +15,16 @@ after_success:
     if ([ ! -z "$TRAVIS_TAG" ]) && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
       # Install github_changelog_generator
       gem install github_changelog_generator
-      
-      # mvn deploy to Bintray
-      echo "Deploy to Bintray..."
+
+      # Get latest (soon to be previous) release
+      previous_release_tag=$(curl -s \
+        -u donovanmuller:${GITHUB_ACCESS_TOKEN} \
+        https://api.github.com/repos/donovanmuller/test-minishift-travis/releases/latest | \
+          jq -r .tag_name)
 
       # Create GitHub release
       release_name="${TRAVIS_TAG:1}"
-      github_changelog_generator -t ${GITHUB_ACCESS_TOKEN} -o /tmp/CHANGELOG.md --since-tag ${TRAVIS_TAG}
+      github_changelog_generator -t ${GITHUB_ACCESS_TOKEN} -o /tmp/CHANGELOG.md --since-tag ${previous_release_tag}
       release_changelog=$(< /tmp/CHANGELOG.md)
       jq -n \
         --arg tag_name "$TRAVIS_TAG" \
@@ -49,6 +52,9 @@ after_success:
       git remote add origin https://donovanmuller:${GITHUB_ACCESS_TOKEN}@github.com/donovanmuller/test-minishift-travis.git      
       git add CHANGELOG.md
       git commit -m "Add CHANGELOG [ci skip]" && git push origin HEAD:master          
+
+      # mvn deploy to Bintray
+      echo "Deploy to Bintray..."
     else
       echo "This will not deploy!"
     fi
