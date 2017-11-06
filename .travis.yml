@@ -1,25 +1,41 @@
 language: java
-
-
 sudo: required
+cache:
+  directories:
+  - .autoconf
+  - $HOME/.m2
+
 env: 
   global:
     - secure: "e4uMh+z1TIX1qAIulkyyfWrQqYY1954XYDnnwWADzdCZNOBFaS4fgt1jvoaY+zwNsoSGDdd0UAprbIu/S8tIj8LgBC6pNYOVioEGHRlFQAA5ZSaY4QSZigr/7poo2x44tUdfGjj+IaHtAy6dJxni++u0oZc4kPLzjRbNUO1QldtxnLc0utM3UsDWvdNqemrzu0x52zPCnvkjtzGwPIntkIEa5UW3+xURbVXuq++O4kiWlR7GXtPdMR7ck6LlJzOSBEYam0pwK3UzUq1uDIzUmvEyz8mSscbjkBVapI1HaVqFZJMMMC/nnV5O18mL+cHJd8OaqDR7+YeqwzXwtCjTASMnZVElweWA0Hs404NfcfzUNowrokqihE2sjOzBth0WKx9l4KijICj+PvRSr3mgAQ8/5rK2ATezDNjHdA7exXxNqpC1E0ImW+PPqYALdiIl55LhZtrVTbe4NwxRa5+XN+q3L9hJni6MhrSO35DgmsM4b5voPIr0o+njze/wReqHz83ZhMfKxHTbRZ/eVJ81aM1Lb9s7idpsiEdPB6ipfzhaZlaR62u+n4LqQ1kpc6DDZxHD9I5Ag8zFxQE7EDorhweLFHhQY82a37gdopx4+gql/CwXG+K4jI5hORxT33a8S0MlXg3svkQjr+WSitQqG8TLnPCofh2ykD5mTjAKC/A="
     - secure: "L7wBPH5bt+EFoO/jbCx8gV13HP9O3dotBrPVL6eYeN938RvrDoefkRV4hc68ijOM9NwdRPptwU+g9YeRm/HSQvH3IPcgVPWRgdnM9SSqI7tNsoQZexaqoruUPgOAkxQTHIE7lsW/u13PL1qZC1aLBmHu5w9TQ9SQPPKVwyxzMbWApftDgfmawsPsewtqx1sMixyEp0x40PhQ2lviqfLW/aLLdS9rLsjQVBJL5nFYBSNBnYyc2QIuDt9b+dDyTsMJVIetNUcpnnvWdwpQsMyH2+wcPzY5rB/DrcQYrguqgI3Wn2jiEueIYWHNsWEa1K7XN+RfqG2qrzQJlW76yt6D4uZcwIDODKU6kK0M+qY6+Z2zAI6aw3m4pVI9FCPXvUrhT1G1ofUDXpSht4RzycYRDm8zE6jhjgQbzfB6PND42cLKUG++czNP0AR8sSNijGN7bY0LaHRbMyC+GK2vgprZZV+WOUMGn4GGA5Bt5cUbcXvdNyvbcotrEztqIs7p1WBiwzO9MM5Nvfrxxbrq/y7olwkXgbGtR2V8cGd5PT1QoGLk/rm/RSft+CcMHsoiXdcjXp1Nd5jkj2CPNnyHUEboMNhTfYWFMyPqHHUcJLYuho2OHq30KhiRf2726tJiqRukrDudEHtkzDzUz+W9EhNSyConLSFrMOagqbj7nJjwqdA="
+    - secure: "ZYdYGwZi0HEL3qte+g2fwHLvx/y4gd3YfXoISwoyzTDC0oQh7j/XkIRol6IENakKamzVX8VCIQ/l9hAvolOZN0VYVRCBodLa2sI5CY7GWZBA91ta+1wys5DuIkfDRIS8ysYDRmqPh9sF/PlxTxjq/yQxCRwnzczDMR+7gyEgtrZpKU6qfXaVoM5IaIAsT9VBpH4bFFUA2CeOGx0kxXndVQIjNBS7kZphGwISOTrjpglX2kXJdkCibvHklf9ZMR6DpNfXqbhbg52G1Qd7w/SUrN3AZtUvwf3bmfbiQxqQb2g7WRcsKXzdCP50zbyFfFqoxYOSLwMrQX131H8OK/IJS7F5q4xMGa3QDzhozyJlIAhU+u0kaGZ1VhvlRExVJxgL/zT0w4zqhygfVXPDYQkGbeFkc6gTnZts3kyO77+L1M77HY/d35wMOBnl5wSPQ0RT52A2GvJiSFyaFh8hpUVYJJlem0zQXhX3E7Agb+kN1nQLRa4gCcsQ/1XFuzmz71/g7amrSd61EXvC/uj6DspCW+YHaDBFgUNqauVDHwCZyMfQZtEdjxGpYDK6QUXFFa2LcLvwlTNqcSrBPjU+qrpK72JitnDwubac0h27hgRxN7bqlqa+1I3X8N0LSDQU2+YSLMilcrv/kbBl1Xfjbs55tyLYh1i83RwjhVblfHge+f8="    
+    - secure: "dX+aQQRbNTaJHzWFAj061hunak/9LWFa+UYn/ccYl/f9KrpTqUkkGWsuZ7ZrCL4HE+J2ftJhYblsYLmlDFy9K0tePDVPH/839BLnjFJ8I3Ohc/YYP6LUJbrUr8paWDg6QKm55rOzPui1O/g6NsDvtFUOk994oz4wYojFIJYGiTAY+HdLds6M5ObgC/WXSTUzD3mg5YFSv3NkAbwR2OMyCmYHpljMiCvcf7lIIU7FeMg5Q9K5TpJ4BtpqnUacVVACCzRzioX2epBAe6K7A2n7VLJUysu390S9zNiFIMrlNrLl/VjQGlIRUJ+sFGpBm6IGCaG98J8hOjm6e3To8j/IfjKvNwlWFNajEeyym3ifivXE+CigADshlDv31gsMPn7QURr/O8f2h3AdN7HA0T3EzmcrsybhOyw+C4ZUY09prws9YBir2fDXfVWWwDG0j2RCX5R9iVB+yHvIUySRor2i/xFdrEw4uTrmnHBXYEUZgchl9q8Z8hTXgDnYMs6pLrTQipQU+jYryTrzNF64fz3Tb2JdudLtAd/ifWPsvWfdu3dKDi+rIfp9Dnv3FYGBoWALL9LXkIjLvG2mc1trMxz4NP8qAbt3sibS4Ob8LNC2iFRD/p5wEdGKOEXulhl1bXy99auBcq3pVuwuqpz/M28U+91QYiZnC8VNWWgwkKxc1zU="
+    - secure: "bteTyjAx5XdM0hT0EDE1G2EiJB644elaNlneJwvxmqLsCON0c36cPbtUBZG9qwH5vRQ4K8PS7rqgFv7KG1wnfUTLskjz64YDFLP72UAnucFYc9rj0j2M5NRW6gunHPwO79noc9dbPDXoqGtBVqFJZtU6awriYSyb7UPXhHObLS5f3EVPwBXGkiB/qbJu90DAPT26ZDGRy9GmOqCJZuMqWXSjARHZKDb/SWuVTbpYKtd6acAaSAFXaVS2NGr63r6FdojpjCFahyK4loL7WJAWGGZwP+/IXkmmSXs969ZoYpJEDEAbIVCYeYjd1Ig8M7pyTMQirOJtgE5N1ldqECpmg4TsdaqtXcV4PFonKGmbxvqM2yUhBnJgUBwpNlHvaIV02MzVZQQt8eQlqsj7ctHim+DPSeOmQJrQhiaHJvGQ5Zi+oYPli7PAGT5c3QAb+qCFTUOVTaEu+h1tionzDVUl3yaum+Bx64MmM6d/HomJbxZdQA/SnvEhAlMvQOZu0rSiIA7glmUwWEAWHMGt3EH27+Z8lrAxxkhxWztxAJ+UQxcliFEJPnTIe7DzpB3aJREPkPoBbg2WHwwx3uZgC0WmG0V8a41UeNJ7ltcLNmh6wU6mrAyqT9vOVj5t96DkZTOqcEWeugxa/m3S4GsfdjumkPnh9tkkc6EDbGXcoCWbcb0="
+
+before_install:
+  - openssl aes-256-cbc -K $encrypted_dcdba4f32eaf_key -iv $encrypted_dcdba4f32eaf_iv -in .travis/gpg_secret_key.enc -out /tmp/gpg_secret_key -d
+  - gpg_secret_key=$(< /tmp/gpg_secret_key)
+  - if [ ! -z "$gpg_secret_key" ]; then echo $gpg_secret_key | base64 --decode | gpg --import; fi
+  - if [ ! -z "$GPG_OWNERTRUST" ]; then echo $GPG_OWNERTRUST | base64 --decode | gpg --import-ownertrust; fi
 
 script:
   - /bin/true
 
-after_success:
-  - |
-    if ([ ! -z "$TRAVIS_TAG" ]) && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+deploy:
+  provider: script
+  skip_cleanup: true
+  on:
+    tags: true    
+  script:
+    - |
       # Install github_changelog_generator
       gem install github_changelog_generator
 
       # Get latest (soon to be previous) release
       previous_release_tag=$(curl -s \
-        -u donovanmuller:${GITHUB_ACCESS_TOKEN} \
-        https://api.github.com/repos/donovanmuller/test-minishift-travis/releases/latest | \
+        -u ${GITHUB_USERNAME}:${GITHUB_ACCESS_TOKEN} \
+        https://api.github.com/repos/${GITHUB_USERNAME}/test-minishift-travis/releases/latest | \
           jq -r .tag_name)
 
       # Create GitHub release
@@ -38,9 +54,9 @@ after_success:
             "prerelease": false
         }' |
         curl -i \
-          -u donovanmuller:${GITHUB_ACCESS_TOKEN} \
+          -u ${GITHUB_USERNAME}:${GITHUB_ACCESS_TOKEN} \
           -d@- \
-          https://api.github.com/repos/donovanmuller/test-minishift-travis/releases
+          https://api.github.com/repos/${GITHUB_USERNAME}/test-minishift-travis/releases
 
       # Generate CHANGELOG.md
       github_changelog_generator -t ${GITHUB_ACCESS_TOKEN}
@@ -49,12 +65,9 @@ after_success:
       git config --global user.email "builds@travis-ci.com"
       git config --global user.name "Travis CI"
       git remote rm origin
-      git remote add origin https://donovanmuller:${GITHUB_ACCESS_TOKEN}@github.com/donovanmuller/test-minishift-travis.git      
+      git remote add origin https://${GITHUB_USERNAME}:${GITHUB_ACCESS_TOKEN}@github.com/${GITHUB_USERNAME}/test-minishift-travis.git      
       git add CHANGELOG.md
       git commit -m "Add CHANGELOG [ci skip]" && git push origin HEAD:master          
 
       # mvn deploy to Bintray
-      echo "Deploy to Bintray..."
-    else
-      echo "This will not deploy!"
-    fi
+      ./mvnw -s .travis/settings.xml -DskipTests=true -DperformRelease=true deploy"
