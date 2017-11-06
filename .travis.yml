@@ -27,4 +27,5 @@ deploy:
   script: chmod +x .travis/release.sh && .travis/release.sh
   skip_cleanup: true
   on:
+    jdk: openjdk8
     tags: true
