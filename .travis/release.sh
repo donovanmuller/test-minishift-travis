@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 # Install github_changelog_generator
 gem install github_changelog_generator
