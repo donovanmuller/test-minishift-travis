@@ -1,5 +1,16 @@
 # Change Log
 
+## [Unreleased](https://github.com/donovanmuller/test-minishift-travis/tree/HEAD)
+
+[Full Changelog](https://github.com/donovanmuller/test-minishift-travis/compare/v0.0.20...HEAD)
+
+**Closed issues:**
+
+- Add codecov [\#9](https://github.com/donovanmuller/test-minishift-travis/issues/9)
+
+## [v0.0.20](https://github.com/donovanmuller/test-minishift-travis/tree/v0.0.20) (2017-11-06)
+[Full Changelog](https://github.com/donovanmuller/test-minishift-travis/compare/v0.0.19...v0.0.20)
+
 ## [v0.0.19](https://github.com/donovanmuller/test-minishift-travis/tree/v0.0.19) (2017-11-06)
 [Full Changelog](https://github.com/donovanmuller/test-minishift-travis/compare/v0.0.18...v0.0.19)
 
