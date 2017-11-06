@@ -1,5 +1,8 @@
-language: java
 sudo: required
+language: java
+jdk:
+  - openjdk8
+  - oraclejdk8
 cache:
   directories:
     - $HOME/.m2
@@ -17,9 +20,6 @@ before_install:
   - gpg_secret_key=$(< /tmp/gpg_secret_key)
   - if [ ! -z "$gpg_secret_key" ]; then echo $gpg_secret_key | base64 --decode | gpg --import; fi
   - if [ ! -z "$GPG_OWNERTRUST" ]; then echo $GPG_OWNERTRUST | base64 --decode | gpg --import-ownertrust; fi
-
-script:
-  - /bin/true
 
 deploy:
   provider: script
