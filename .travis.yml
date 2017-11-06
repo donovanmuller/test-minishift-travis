@@ -21,6 +21,11 @@ before_install:
   - if [ ! -z "$gpg_secret_key" ]; then echo $gpg_secret_key | base64 --decode | gpg --import; fi
   - if [ ! -z "$GPG_OWNERTRUST" ]; then echo $GPG_OWNERTRUST | base64 --decode | gpg --import-ownertrust; fi
 
+script: "./mvnw cobertura:cobertura"
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)  
+
 deploy:
   provider: script
   # see https://github.com/travis-ci/travis-ci/issues/5538
