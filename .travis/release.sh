@@ -10,7 +10,7 @@ previous_release_tag=$(curl -s \
         jq -r .tag_name)
 
 # Create GitHub release
-release_name="${TRAVIS_TAG:1}"
+release_name="${TRAVIS_TAG:1}.RELEASE"
 github_changelog_generator -t ${GITHUB_ACCESS_TOKEN} -o /tmp/CHANGELOG.md --since-tag ${previous_release_tag}
 release_changelog=$(< /tmp/CHANGELOG.md)
 jq -n \
@@ -41,4 +41,17 @@ git add CHANGELOG.md
 git commit -m "Add CHANGELOG [ci skip]" && git push origin HEAD:master          
 
 # mvn deploy to Bintray
-./mvnw -s .travis/settings.xml -DskipTests=true -DperformRelease=true deploy
+./mvnw --settings .travis/settings.xml \
+    org.codehaus.mojo:build-helper-maven-plugin:3.0.0:parse-version \
+    versions:set -DnewVersion="${release_name}" \
+    versions:commit
+./mvnw --settings .travis/settings.xml -DskipTests=true -DperformRelease=true deploy
+
+# Increment, commit and push the next development version
+./mvnw --settings .travis/settings.xml \
+    org.codehaus.mojo:build-helper-maven-plugin:3.0.0:parse-version \
+    versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion}-SNAPSHOT \
+    versions:commit
+git add pom.xml
+git commit -m "Set next development version [ci skip]" && git push origin HEAD:master      
+    
