@@ -4,6 +4,18 @@ set -e
 # Install github_changelog_generator
 gem install github_changelog_generator
 
+# Generate CHANGELOG.md
+echo -e "\033[0;32mGenerating CHANGELOG...\033[0m"
+github_changelog_generator -t ${GITHUB_ACCESS_TOKEN}
+
+# Commit and push the CHANGELOG
+git config --global user.email "builds@travis-ci.com"
+git config --global user.name "Travis CI"
+git remote rm origin
+git remote add origin https://${GITHUB_USERNAME}:${GITHUB_ACCESS_TOKEN}@github.com/${GITHUB_USERNAME}/test-minishift-travis.git
+git add CHANGELOG.md
+git commit -m "Add CHANGELOG [ci skip]" && git push origin HEAD:master
+
 # Get latest (soon to be previous) release
 previous_release_tag=$(curl -s \
     -u ${GITHUB_USERNAME}:${GITHUB_ACCESS_TOKEN} \
@@ -31,18 +43,6 @@ jq -n \
         -u ${GITHUB_USERNAME}:${GITHUB_ACCESS_TOKEN} \
         -d@- \
         https://api.github.com/repos/${GITHUB_USERNAME}/test-minishift-travis/releases
-
-# Generate CHANGELOG.md
-echo -e "\033[0;32mGenerating CHANGELOG...\033[0m"
-github_changelog_generator -t ${GITHUB_ACCESS_TOKEN}
-
-# Commit and push the CHANGELOG
-git config --global user.email "builds@travis-ci.com"
-git config --global user.name "Travis CI"
-git remote rm origin
-git remote add origin https://${GITHUB_USERNAME}:${GITHUB_ACCESS_TOKEN}@github.com/${GITHUB_USERNAME}/test-minishift-travis.git      
-git add CHANGELOG.md
-git commit -m "Add CHANGELOG [ci skip]" && git push origin HEAD:master          
 
 # mvn deploy to Bintray
 echo -e "\033[0;32mDeploying to Bintray...\033[0m"
