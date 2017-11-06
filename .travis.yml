@@ -34,3 +34,6 @@ deploy:
   on:
     jdk: openjdk8
     tags: true
+
+after_deploy:
+  script: git status    
