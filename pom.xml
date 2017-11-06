@@ -12,7 +12,7 @@
 
     <groupId>io.switchbit</groupId>
     <artifactId>test-minishift-travis</artifactId>
-    <version>0.0.19-SNAPSHOT</version>
+    <version>0.0.20-SNAPSHOT</version>
 
     <profiles>
         <profile>
