@@ -1,5 +1,8 @@
 # Change Log
 
+## [v0.0.14](https://github.com/donovanmuller/test-minishift-travis/tree/v0.0.14) (2017-11-06)
+[Full Changelog](https://github.com/donovanmuller/test-minishift-travis/compare/v0.0.13...v0.0.14)
+
 ## [v0.0.13](https://github.com/donovanmuller/test-minishift-travis/tree/v0.0.13) (2017-11-06)
 [Full Changelog](https://github.com/donovanmuller/test-minishift-travis/compare/v0.0.12...v0.0.13)
 
