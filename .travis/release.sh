@@ -14,7 +14,8 @@ previous_release_tag=$(curl -s \
 echo -e "\033[0;32mCreating GitHub release...\033[0m"
 release_name="${TRAVIS_TAG:1}.RELEASE"
 github_changelog_generator -t ${GITHUB_ACCESS_TOKEN} -o /tmp/CHANGELOG.md --since-tag ${previous_release_tag}
-release_changelog=$(< /tmp/CHANGELOG.md)
+cat <(sed -e '$ d' /tmp/CHANGELOG.md) <(echo "Bintray artifacts: https://bintray.com/${GITHUB_USERNAME}/switchbit-public/test-minishift-travis/${release_name}") > /tmp/CHANGELOG.md.release
+release_changelog=$(< /tmp/CHANGELOG.md.release)
 jq -n \
     --arg tag_name "$TRAVIS_TAG" \
     --arg release_name "$release_name" \
@@ -59,4 +60,3 @@ echo -e "\033[0;32mSetting next development version...\033[0m"
     versions:commit
 git add pom.xml
 git commit -m "Set next development version [ci skip]" && git push origin HEAD:master      
-    
