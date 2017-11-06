@@ -13,16 +13,6 @@ script:
 after_success:
   - |
     if ([ ! -z "$TRAVIS_TAG" ]) && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
-      # Generate CHANGELOG.md
-      gem install github_changelog_generator
-      github_changelog_generator -t ${GITHUB_ACCESS_TOKEN}
-
-      # Commit and push the CHANGELOG
-      git config --global user.email "builds@travis-ci.com"
-      git config --global user.name "Travis CI"
-      git add CHANGELOG.md
-      git commit -m "Add CHANGELOG [ci skip]" && git push origin HEAD:master
-
       # mvn deploy to Bintray
       echo "Deploy to Bintray..."
 
@@ -45,6 +35,18 @@ after_success:
           -u donovanmuller:${GITHUB_ACCESS_TOKEN} \
           -d@- \
           https://api.github.com/repos/donovanmuller/test-minishift-travis/releases
+
+      # Generate CHANGELOG.md
+      gem install github_changelog_generator
+      github_changelog_generator -t ${GITHUB_ACCESS_TOKEN}
+
+      # Commit and push the CHANGELOG
+      git config --global user.email "builds@travis-ci.com"
+      git config --global user.name "Travis CI"
+      git remote rm origin
+      git remote add origin https://user:${GITHUB_ACCESS_TOKEN}@github.com/donovanmuller/test-minishift-travis.git      
+      git add CHANGELOG.md
+      git commit -m "Add CHANGELOG [ci skip]" && git push origin HEAD:master          
     else
       echo "This will not deploy!"
     fi
