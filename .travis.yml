@@ -5,6 +5,7 @@ sudo: required
 env: 
   global:
     - secure: "YPiNhz2FylPtxnlDcI7Mv5UCXmDct0m8lARIshhuic9ysBXQlP2SKEuBoOKFS5BEoL7vqvt+etdfDDF2xEpWn0fjhbc5tE+qNx/ElAQVJEnjjjiWikTobMAOb2lzpUcV9hhkENzuCcSEu9qP7LdzSY1X2KrNsc2zoAMOdCxUo5KFWvJcDcgapPdJ6pjbyCjI+90JB145/cYHmWjrBdPSMpPnsLZwgLaj/4rW0QgwyO6m0Rp3dUq/8t1dGQR0WktHdIhu2P+Dh4nieNdmzSzo/iOpXGYUvLHERIVgI9OuCzUpt47BXlU2mBKP6PUPpi3ajpVi6AEb2fjNRCFXfgu0bTgh3PYEjIoPoEb800b8yBhSrbBZgRiVTCw9g7bBmn5Kq3KdpNBDGdH1KPU2/4hd+Wbl8vZhCOXrBUWtrYLmcSmDGBUPO+yG/fR5IrxX6LWK7xDi4HDKXP2jwyKf12EMbsVq+K/7GOPMyJ+0NRt/+Eln8qod6YAxrWVbcf7h4fO/9IfZAxwS42YuKvqrf7j8O83DQ0QbqYDDWlWmZVLWlG7sEpvKWwAz4gtJ17X20rACCxjsRrAB9uTF3+NDNZO7Wca+Ol1MfgGgVwjkp8CUYP8a3S1l6buzV75AtAKYdOZWZcX8wD3XZzjEa7qxUiOUXCoFLBy3JuewVxKq7SYIvP8="
+    - secure: "e4uMh+z1TIX1qAIulkyyfWrQqYY1954XYDnnwWADzdCZNOBFaS4fgt1jvoaY+zwNsoSGDdd0UAprbIu/S8tIj8LgBC6pNYOVioEGHRlFQAA5ZSaY4QSZigr/7poo2x44tUdfGjj+IaHtAy6dJxni++u0oZc4kPLzjRbNUO1QldtxnLc0utM3UsDWvdNqemrzu0x52zPCnvkjtzGwPIntkIEa5UW3+xURbVXuq++O4kiWlR7GXtPdMR7ck6LlJzOSBEYam0pwK3UzUq1uDIzUmvEyz8mSscbjkBVapI1HaVqFZJMMMC/nnV5O18mL+cHJd8OaqDR7+YeqwzXwtCjTASMnZVElweWA0Hs404NfcfzUNowrokqihE2sjOzBth0WKx9l4KijICj+PvRSr3mgAQ8/5rK2ATezDNjHdA7exXxNqpC1E0ImW+PPqYALdiIl55LhZtrVTbe4NwxRa5+XN+q3L9hJni6MhrSO35DgmsM4b5voPIr0o+njze/wReqHz83ZhMfKxHTbRZ/eVJ81aM1Lb9s7idpsiEdPB6ipfzhaZlaR62u+n4LqQ1kpc6DDZxHD9I5Ag8zFxQE7EDorhweLFHhQY82a37gdopx4+gql/CwXG+K4jI5hORxT33a8S0MlXg3svkQjr+WSitQqG8TLnPCofh2ykD5mTjAKC/A="
 
 script:
   - /bin/true
@@ -30,7 +31,7 @@ after_success:
       release_name=="${TRAVIS_TAG:1}"
       github_changelog_generator -t ${CHANGELOG_GITHUB_TOKEN} -o /tmp/CHANGELOG.md --since-tag ${TRAVIS_TAG}
       release_changelog=$(< /tmp/CHANGELOG.md)
-      curl -i -H 'Authorization: token 0438df058dc72698c966f912779bfec21eb741d5' \
+      curl -i -H 'Authorization: token ${GITHUB_ACCESS_TOKEN}' \
         -d '{
           "tag_name": "${TRAVIS_TAG}",
           "name": "${release_name}",
