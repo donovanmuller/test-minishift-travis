@@ -1,70 +1,30 @@
-# sudo: required
-
-# # This moves Kubernetes specific config files.
-# env:
-# - CHANGE_MINIKUBE_NONE_USER=true
-
-# before_script:
-# #- curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.7.0/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin/
-# # Download and extract minishift
-# #- curl -Lo minishift.tar.gz https://github.com/minishift/minishift/releases/download/v1.8.0/minishift-1.8.0-linux-amd64.tgz && tar xvzf minishift.tar.gz -C /tmp --strip-components=1 minishift-1.8.0-linux-amd64/minishift 
-# #- sudo minikube start --vm-driver=none --kubernetes-version=v1.7.0
-# # Fix the kubectl context, as it's often stale.
-# #- minikube update-context
-# # Wait for Kubernetes to be up and ready.
-# #- JSONPATH='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}'; until kubectl get nodes -o jsonpath="$JSONPATH" 2>&1 | grep -q "Ready=True"; do sleep 1; done
-
-# # Install OepnShift client tools (oc)
-# - sudo curl -Lo openshift-origin-client-tools.tar.gz https://github.com/openshift/origin/releases/download/v3.6.1/openshift-origin-client-tools-v3.6.1-008f2d5-linux-64bit.tar.gz && tar xvzf openshift-origin-client-tools.tar.gz -C /usr/local/bin/ --strip-components=1 openshift-origin-client-tools-v3.6.1-008f2d5-linux-64bit/oc
-# - oc cluster up
-
-# script:
-# # Create example Redis deployment on Kubernetes.
-# #- kubectl cluster-info 
-# #- kubectl run travis-example --image=redis
-# #- kubectl get deployment
-
-# - oc get nodes
-
 language: java
-jdk:
-  - oraclejdk8
+
 
 sudo: required
 env: 
   global:
-    - OPENSHIFT_VERSIONS="v3.6.1"
-    - OPENSHIFT_OC_VERSION="v3.6.1"
-    - OPENSHIFT_OC_COMMIT_ID="008f2d5"
-
-before_script:
-  - sudo mount --make-shared /
-  - sudo service docker stop
-  - sudo sed -i 's/DOCKER_OPTS=\"/DOCKER_OPTS=\"--insecure-registry 172.30.0.0\/16 /' /etc/default/docker
-  - sudo service docker start
-  - wget https://github.com/openshift/origin/releases/download/${OPENSHIFT_OC_VERSION}/openshift-origin-client-tools-${OPENSHIFT_OC_VERSION}-${OPENSHIFT_OC_COMMIT_ID}-linux-64bit.tar.gz
-  - tar xvzOf openshift-origin-client-tools-${OPENSHIFT_OC_VERSION}-${OPENSHIFT_OC_COMMIT_ID}-linux-64bit.tar.gz > oc.bin
-  - sudo mv oc.bin /usr/bin/oc
-  - sudo chmod 755 /usr/bin/oc
+    - secure: "YPiNhz2FylPtxnlDcI7Mv5UCXmDct0m8lARIshhuic9ysBXQlP2SKEuBoOKFS5BEoL7vqvt+etdfDDF2xEpWn0fjhbc5tE+qNx/ElAQVJEnjjjiWikTobMAOb2lzpUcV9hhkENzuCcSEu9qP7LdzSY1X2KrNsc2zoAMOdCxUo5KFWvJcDcgapPdJ6pjbyCjI+90JB145/cYHmWjrBdPSMpPnsLZwgLaj/4rW0QgwyO6m0Rp3dUq/8t1dGQR0WktHdIhu2P+Dh4nieNdmzSzo/iOpXGYUvLHERIVgI9OuCzUpt47BXlU2mBKP6PUPpi3ajpVi6AEb2fjNRCFXfgu0bTgh3PYEjIoPoEb800b8yBhSrbBZgRiVTCw9g7bBmn5Kq3KdpNBDGdH1KPU2/4hd+Wbl8vZhCOXrBUWtrYLmcSmDGBUPO+yG/fR5IrxX6LWK7xDi4HDKXP2jwyKf12EMbsVq+K/7GOPMyJ+0NRt/+Eln8qod6YAxrWVbcf7h4fO/9IfZAxwS42YuKvqrf7j8O83DQ0QbqYDDWlWmZVLWlG7sEpvKWwAz4gtJ17X20rACCxjsRrAB9uTF3+NDNZO7Wca+Ol1MfgGgVwjkp8CUYP8a3S1l6buzV75AtAKYdOZWZcX8wD3XZzjEa7qxUiOUXCoFLBy3JuewVxKq7SYIvP8="
 
 script:
-  - |
-    set -e
-    [[ ! -z "${OPENSHIFT_VERSIONS}" ]]
-    for version in ${OPENSHIFT_VERSIONS}; do
-      oc cluster up --version=${version}
-      oc new-project scdf
-      oc login -u system:admin
-      oc get pods --all-namespaces
-      oc cluster down
-    done
+  - /bin/true
 
-after_failure:
- - oc login -u system:admin
- - oc get events
- 
 after_success:
   - |
-    if [[ "${TRAVIS_BRANCH}" == "master" && "${TRAVIS_PULL_REQUEST}" == "false" ]]; then
-      echo "Should we use this?"
-    fi
+  if ([ ! -z "$TRAVIS_TAG" ]) && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+    # Generate CHANGELOG.md
+    gem install github_changelog_generator
+    github_changelog_generator -t CHANGELOG_GITHUB_TOKEN
+
+    # Commit and push the CHANGELOG
+    git config --global user.email "builds@travis-ci.com"
+    git config --global user.name "Travis CI"
+    git commit -a -m "Add CHANGELOG [ci skip]" && git push
+
+    # mvn deploy to Bintray
+    echo "Deploy to Bintray..."
+
+    # Create GitHub release
+  else
+    echo "This will not deploy!"
+  fi
