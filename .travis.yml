@@ -13,6 +13,9 @@ script:
 after_success:
   - |
     if ([ ! -z "$TRAVIS_TAG" ]) && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+      # Install github_changelog_generator
+      gem install github_changelog_generator
+      
       # mvn deploy to Bintray
       echo "Deploy to Bintray..."
 
@@ -37,7 +40,6 @@ after_success:
           https://api.github.com/repos/donovanmuller/test-minishift-travis/releases
 
       # Generate CHANGELOG.md
-      gem install github_changelog_generator
       github_changelog_generator -t ${GITHUB_ACCESS_TOKEN}
 
       # Commit and push the CHANGELOG
