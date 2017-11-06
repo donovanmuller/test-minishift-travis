@@ -1,5 +1,15 @@
 # Change Log
 
+## [v0.0.18](https://github.com/donovanmuller/test-minishift-travis/tree/v0.0.18) (2017-11-06)
+[Full Changelog](https://github.com/donovanmuller/test-minishift-travis/compare/v0.0.17...v0.0.18)
+
+**Closed issues:**
+
+- Set next development version [\#7](https://github.com/donovanmuller/test-minishift-travis/issues/7)
+- Use bash explicitly in scripts [\#6](https://github.com/donovanmuller/test-minishift-travis/issues/6)
+- Move scripts to a script file. [\#5](https://github.com/donovanmuller/test-minishift-travis/issues/5)
+- Add Maven deploy with GPG [\#4](https://github.com/donovanmuller/test-minishift-travis/issues/4)
+
 ## [v0.0.17](https://github.com/donovanmuller/test-minishift-travis/tree/v0.0.17) (2017-11-06)
 [Full Changelog](https://github.com/donovanmuller/test-minishift-travis/compare/v0.0.16...v0.0.17)
 
