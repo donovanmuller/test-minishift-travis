@@ -14,7 +14,8 @@ after_success:
     if ([ ! -z "$TRAVIS_TAG" ]) && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
       # Generate CHANGELOG.md
       gem install github_changelog_generator
-      github_changelog_generator -t CHANGELOG_GITHUB_TOKEN
+      echo "Using GitHub token: "${CHANGELOG_GITHUB_TOKEN}"
+      github_changelog_generator -t ${CHANGELOG_GITHUB_TOKEN}
 
       # Commit and push the CHANGELOG
       git config --global user.email "builds@travis-ci.com"
