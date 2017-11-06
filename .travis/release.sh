@@ -41,4 +41,4 @@ git add CHANGELOG.md
 git commit -m "Add CHANGELOG [ci skip]" && git push origin HEAD:master          
 
 # mvn deploy to Bintray
-cd .. && ./mvnw -s .travis/settings.xml -DskipTests=true -DperformRelease=true deploy
+./mvnw -s .travis/settings.xml -DskipTests=true -DperformRelease=true deploy
